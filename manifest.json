@@ -1,8 +1,8 @@
-﻿{
+{
     "manifest_version": 3,
-    "name": "Refined Speed Dial",
+    "name": "Brave Speed Dial",
     "version": "1.1.0",
-    "description": "Um speed dial minimalista e customizável para sua Nova Guia, com pastas, papel de parede, cor de destaque e sincronização entre dispositivos.",
+    "description": "Customizable New Tab Speed Dial with drag-and-drop folders, custom wallpapers, accent colors, and cross-device sync.",
     "chrome_url_overrides": {
         "newtab": "newtab.html"
     },
