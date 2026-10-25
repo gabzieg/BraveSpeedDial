@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="icons/icon128.png" alt="Refined Speed Dial Logo" width="80" height="80" />
+  <img src="icons/icon128.png" alt="Brave Speed Dial Logo" width="80" height="80" />
 </p>
 
-<h1 align="center">Refined Speed Dial</h1>
+<h1 align="center">Brave Speed Dial</h1>
 
 <p align="center">
   <strong>Replace your cluttered New Tab page with a fast, customizable Speed Dial featuring drag-and-drop folders, custom wallpapers, and cross-device sync.</strong>
@@ -17,11 +17,11 @@
 
 ---
 
-## 💡 Why Refined Speed Dial?
+## 💡 Why Brave Speed Dial?
 
 Default browser New Tab pages are either too limited (restricting you to a handful of auto-generated shortcuts) or overloaded with news feeds, sponsored cards, and crypto widgets you never asked for.
 
-**Refined Speed Dial** gives you a clean, distraction-free launchpad every time you press `Ctrl + T`. Organize dozens of bookmarks into visual **folders**, customize your **wallpaper** and **accent color**, interact via a custom right-click **context menu**, and keep your layout synchronized across devices via `chrome.storage.sync` (with automatic fallback to `chrome.storage.local`).
+**Brave Speed Dial** gives you a clean, distraction-free launchpad every time you press `Ctrl + T`. Organize dozens of bookmarks into visual **folders**, customize your **wallpaper** and **accent color**, interact via a custom right-click **context menu**, and keep your layout synchronized across devices via `chrome.storage.sync` (with automatic fallback to `chrome.storage.local`).
 
 ---
 
@@ -42,14 +42,14 @@ Works on **Brave**, **Google Chrome**, **Microsoft Edge**, **Vivaldi**, and **Op
 1. **Download this repository:**
    - Click the green **Code** button above and select **Download ZIP** (then extract it), *or* clone via terminal:
      ```bash
-     git clone https://github.com/gabzieg/brave-speed-dial.git
+     git clone https://github.com/gabzieg/BraveSpeedDial.git
      ```
 2. **Open your browser's Extensions page:**
    - Brave: `brave://extensions/`
    - Chrome: `chrome://extensions/`
    - Edge: `edge://extensions/`
 3. **Enable Developer Mode:** Toggle the **Developer mode** switch in the top-right corner.
-4. **Load the Extension:** Click **Load unpacked** (top-left) and select the `brave-speed-dial` folder.
+4. **Load the Extension:** Click **Load unpacked** (top-left) and select the `BraveSpeedDial` folder.
 5. **Open a New Tab (`Ctrl + T`):** Click the `⚙` gear icon in the corner or right-click anywhere on the background to add your first shortcuts and customize your wallpaper!
 
 ---
