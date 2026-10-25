@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Guia</title>
+    <link rel="stylesheet" href="newtab.css">
+</head>
+<body>
+    <button id="settings-btn" class="settings-btn" type="button" aria-label="Abrir configurações" title="Configurações">⚙</button>
+
+    <main class="container">
+        <div id="dial-grid" class="dial-grid" aria-label="Atalhos"></div>
+    </main>
+
+    <div id="folder-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="folder-title" aria-hidden="true">
+        <div class="folder-modal-content">
+            <div class="folder-header">
+                <h2 id="folder-title" class="folder-title">Nome da pasta</h2>
+                <button id="folder-close-btn" class="icon-btn" type="button" aria-label="Fechar pasta">×</button>
+            </div>
+            <div id="folder-grid" class="dial-grid" aria-label="Atalhos da pasta"></div>
+        </div>
+        <div id="out-of-folder-drop" class="out-of-folder-drop">Solte aqui para tirar da pasta</div>
+    </div>
+
+    <div id="edit-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="edit-title" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="edit-title" class="modal-heading">Adicionar atalho</h2>
+            <div class="modal-preview">
+                <img id="modal-preview-icon" src="" alt="" hidden>
+            </div>
+            <div class="input-group type-toggle">
+                <label><input type="radio" name="dial-type" value="site" checked> Site</label>
+                <label><input type="radio" name="dial-type" value="folder"> Pasta</label>
+            </div>
+            <div class="input-group">
+                <label for="dial-name">Nome</label>
+                <input type="text" id="dial-name" autocomplete="off">
+            </div>
+            <div class="input-group" id="url-group">
+                <label for="dial-url">Endereço</label>
+                <input type="url" id="dial-url" placeholder="https://exemplo.com" autocomplete="url" inputmode="url">
+            </div>
+            <p id="edit-error" class="form-error" role="alert" hidden></p>
+            <div class="modal-actions">
+                <button id="modal-save-btn" class="btn primary" type="button">Salvar</button>
+                <button id="modal-cancel-btn" class="btn secondary" type="button">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="settings-header">
+                <h2 id="settings-title" class="modal-heading">Configurações</h2>
+                <button id="settings-top-close-btn" class="icon-btn" type="button" aria-label="Fechar configurações">×</button>
+            </div>
+            <div class="input-group">
+                <label for="wallpaper-upload">Papel de parede</label>
+                <input type="file" id="wallpaper-upload" accept="image/png, image/jpeg, image/webp" hidden>
+                <div class="button-row">
+                    <button id="choose-wallpaper-btn" class="btn secondary" type="button">Escolher imagem</button>
+                    <button id="remove-wallpaper-btn" class="btn secondary" type="button" title="Remover papel de parede" aria-label="Remover papel de parede">🗑</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="wallpaper-size">Ajuste da imagem</label>
+                <select id="wallpaper-size" class="custom-select">
+                    <option value="cover">Preencher (cobrir tela)</option>
+                    <option value="contain">Ajustar (mostrar inteira)</option>
+                    <option value="repeat">Repetir (lado a lado)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="accent-color">Cor de destaque</label>
+                <div class="color-swatch-row">
+                    <input type="color" id="accent-color" value="#6a3ceb">
+                    <button id="reset-color-btn" class="btn secondary" type="button">Padrão</button>
+                </div>
+            </div>
+            <div class="backup-section">
+                <input type="file" id="import-input" accept="application/json" hidden>
+                <button id="export-btn" class="btn secondary" type="button">Exportar atalhos</button>
+                <button id="import-btn" class="btn secondary" type="button">Importar atalhos</button>
+            </div>
+            <div class="quick-links">
+                <button id="settings-bookmarks" class="btn secondary" type="button">Favoritos</button>
+                <button id="settings-history" class="btn secondary" type="button">Histórico</button>
+            </div>
+            <p id="sync-status" class="sync-status" role="status" hidden>Os atalhos foram salvos neste dispositivo. A sincronização não está disponível no momento.</p>
+            <p class="privacy-note">Os ícones dos sites são obtidos pelo serviço de favicons do Google (envia apenas o domínio). Seus atalhos e papel de parede ficam salvos no navegador. Os atalhos sincronizam entre dispositivos conectados quando há espaço disponível; o papel de parede permanece local.</p>
+            <div class="modal-actions">
+                <button id="settings-close-btn" class="btn primary" type="button">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="context-menu" class="context-menu" role="menu" aria-label="Ações do atalho">
+        <button id="context-edit" type="button" role="menuitem">Editar</button>
+        <button id="context-move-up" type="button" role="menuitem">Mover para antes</button>
+        <button id="context-move-down" type="button" role="menuitem">Mover para depois</button>
+        <button id="context-move-out" type="button" role="menuitem">Tirar da pasta</button>
+        <div id="folder-targets"></div>
+        <button id="context-delete" type="button" role="menuitem">Excluir</button>
+    </div>
+    <div id="page-context-menu" class="context-menu page-menu" role="menu" aria-label="Ações da página">
+        <button id="menu-edit-theme" class="highlight-item" type="button" role="menuitem">Papel de parede e tema</button>
+        <button id="menu-add-dial" type="button" role="menuitem">Adicionar atalho</button>
+        <div class="menu-divider" role="separator"></div>
+        <button id="menu-bookmarks" type="button" role="menuitem">Favoritos</button>
+        <button id="menu-history" type="button" role="menuitem">Histórico</button>
+    </div>
+
+    <script src="newtab.js"></script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --item-bg: #333333;
+    --item-hover-bg: #444444;
+    --modal-bg: #2a2a2a;
+    --input-bg: #3a3a3a;
+    --primary-color: #6a3ceb; /* Roxo/azul similar ao da imagem */
+    --primary-contrast: #ffffff;
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle at center, #2a2a2a 0%, #121212 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: hidden;
+}
+
+.container {
+    width: min(100%, 1200px);
+    max-width: 1200px;
+    padding: 72px clamp(16px, 4vw, 40px) 32px;
+    margin-block: auto;
+}
+
+.dial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 140px);
+    gap: 24px 16px;
+    justify-content: center;
+}
+
+.dial-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    width: min(100%, 140px);
+    justify-self: center;
+}
+.dial-open-btn, .add-btn { border: 0; background: transparent; color: inherit; font: inherit; }
+.dial-open-btn { width: 100%; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+
+.dial-card {
+    width: min(100%, 140px);
+    height: 90px;
+    background-color: var(--item-bg);
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    position: relative;
+}
+
+.dial-item:hover .dial-card {
+    transform: translateY(-5px);
+    background-color: var(--item-hover-bg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.dial-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    position: absolute;
+}
+.dial-fallback { font-size: 32px; font-weight: 500; color: rgba(255,255,255,.7); }
+
+.dial-title {
+    margin-top: 10px;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+}
+
+.add-btn .dial-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.add-btn:hover .dial-card {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.add-icon {
+    font-size: 32px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.modal-overlay[aria-hidden="true"] { visibility: hidden; }
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    width: min(100%, 420px);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    transform: translateY(20px);
+    transition: transform 0.2s;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-preview {
+    height: 120px;
+    background-color: var(--primary-color);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-preview img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--input-bg);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: var(--primary-contrast);
+}
+
+.btn.primary:hover {
+    filter: brightness(0.9);
+}
+
+.btn.secondary {
+    background-color: transparent;
+    color: white;
+    border: 1px solid #555;
+}
+
+.btn.secondary:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* Edit/Menu icon on hover */
+.dial-edit-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.dial-item:hover .dial-edit-btn {
+    opacity: 1;
+}
+
+.dial-item:focus-within .dial-edit-btn { opacity: 1; }
+
+.dial-edit-btn::after {
+    content: "⋮";
+    color: white;
+    font-weight: bold;
+}
+
+/* Context Menu */
+.context-menu {
+    position: fixed;
+    background-color: var(--modal-bg);
+    border-radius: 8px;
+    padding: 5px 0;
+    min-width: 150px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    display: none;
+    z-index: 1001;
+    max-height: calc(100dvh - 16px);
+    overflow-y: auto;
+}
+
+.context-menu.active {
+    display: block;
+}
+
+.context-menu button {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: white;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.context-menu button:hover,
+.context-menu button:focus-visible {
+    background-color: rgba(255,255,255,0.1);
+}
+
+
+/* Drag and Drop */
+.dial-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+.dial-item.dragging .dial-card {
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+/* Settings Button */
+.settings-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .45);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 100;
+}
+.settings-btn:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+
+
+
+/* Folder Styles */
+.folder-title { color: white; font-weight: 400; }
+.dial-item.folder .dial-card { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); flex-direction: row; flex-wrap: wrap; padding: 10px; align-content: flex-start; gap: 5px; justify-content: flex-start; }
+.dial-item.folder:hover .dial-card { background-color: rgba(255, 255, 255, 0.15); }
+.folder-mini-icon { width: 30px; height: 30px; background: rgba(0,0,0,0.3); border-radius: 4px; object-fit: contain; }
+.type-toggle { display: flex; gap: 15px; margin-bottom: 20px; }
+.type-toggle label { display: flex; align-items: center; gap: 5px; font-weight: normal; cursor: pointer; }
+.dial-item.drag-target .dial-card { box-shadow: 0 0 0 3px var(--primary-color); transform: scale(1.05); }
+
+
+/* Folder Popup */
+.folder-modal-content {
+    width: min(100%, 900px);
+    max-width: 900px;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    background: rgba(40, 40, 40, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s;
+}
+.modal-overlay.active .folder-modal-content { transform: scale(1); }
+.out-of-folder-drop {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    border: 2px dashed rgba(255,255,255,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, background 0.3s;
+}
+.modal-overlay.active.dragging-item .out-of-folder-drop {
+    opacity: 1;
+    pointer-events: auto;
+}
+.out-of-folder-drop.drag-over {
+    background: rgba(106, 60, 235, 0.8);
+    border-color: white;
+}
+
+
+#folder-overlay.drag-over-background {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+/* Page Context Menu */
+.page-menu {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    min-width: 220px;
+}
+.highlight-item {
+    background-color: var(--primary-color);
+    color: var(--primary-contrast);
+}
+.highlight-item:hover {
+    filter: brightness(0.85);
+}
+.menu-divider {
+    height: 1px;
+    background-color: #3f3f3f;
+    margin: 4px 0;
+}
+
+
+/* Select */
+.custom-select {
+    width: 100%;
+    padding: 12px;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+.custom-select:focus { border-color: var(--primary-color); }
+
+
+/* Keyboard accessibility */
+.dial-open-btn:focus-visible .dial-card,
+.add-btn:focus-visible .dial-card,
+.settings-btn:focus-visible,
+.btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Color picker */
+.color-swatch-row { display: flex; align-items: center; gap: 12px; }
+.color-swatch-row input[type="color"] {
+    width: 44px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+}
+
+/* Backup section */
+.backup-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    display: flex;
+    gap: 10px;
+}
+.quick-links { display: flex; gap: 10px; margin-top: 10px; }
+
+.modal-heading { font-size: 18px; font-weight: 500; margin-bottom: 16px; }
+.folder-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.settings-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: -20px -20px 12px; padding: 12px 20px; position: sticky; top: -20px; z-index: 1; background: var(--modal-bg); }
+.settings-header .modal-heading { margin-bottom: 0; }
+.folder-title { overflow-wrap: anywhere; }
+.icon-btn { flex: none; width: 40px; height: 40px; border: 0; border-radius: 8px; background: rgba(255,255,255,.08); color: white; font-size: 26px; cursor: pointer; }
+.button-row { display: flex; gap: 10px; }
+.button-row #remove-wallpaper-btn { flex: 0 0 44px; }
+.form-error { color: #ffacac; font-size: 13px; line-height: 1.4; }
+[hidden] { display: none !important; }
+.modal-content { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.context-menu button { cursor: pointer; }
+.page-menu button { padding: 12px 15px; }
+.dial-edit-btn:focus-visible, .icon-btn:focus-visible, .context-menu button:focus-visible,
+.custom-select:focus-visible, .input-group input:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+
+@media (hover: none), (pointer: coarse) {
+    .dial-edit-btn { opacity: 1; }
+    .dial-item:hover .dial-card { transform: none; }
+}
+
+@media (max-width: 480px) {
+    body { align-items: flex-start; }
+    .container { padding-top: 84px; margin-block: 0; }
+    .dial-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+    .dial-card { width: 100%; }
+    .folder-modal-content { padding: 20px; }
+    .backup-section { flex-direction: column; }
+    .quick-links { flex-direction: column; }
+    .modal-actions { flex-wrap: wrap; }
+}
+
+@media (max-width: 320px) {
+    .dial-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Privacy note */
+.privacy-note {
+    font-size: 12px;
+    opacity: 0.55;
+    margin-top: 15px;
+    line-height: 1.4;
+}
+
+/* Out-of-folder drop pill */
+.out-of-folder-drop { font-size: 14px; }
+
+.sync-status { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: #5b411a; color: #ffe5ad; font-size: 13px; line-height: 1.4; }
